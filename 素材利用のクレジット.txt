@@ -1,0 +1,16 @@
+素材利用のクレジット
+
+【BGM】
+フリー音楽素材/魔王魂 http://maoudamashii.jokersounds.com/
+・bgm_maoudamashii_8bit01.mp3
+・game_maoudamashii_9_jingle02.mp3
+・se_maoudamashii_retro16.mp3
+・se_maoudamashii_magical01.mp3
+
+【SE】
+・なし
+
+【フォント】
+まるもじフォント（ニコモジ）配布所 http://nicofont.pupu.jp/nicoca.html
+・nicoca_v1.ttf
+
