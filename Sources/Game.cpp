@@ -1,8 +1,9 @@
 #include "Game.hpp"
 #include<math.h>
 
-// TODO: 砲台の位置を画面左に、ターゲットの位置を画面右に移動させる。(A)
-// TODO: 雲の位置を左から右に動かす。見えなくなったら左端に戻す。(B)
+
+// TODO: 砲台の位置を画面左に、ターゲットの位置を画面右に移動させる。(A) 実装：HW15A215 山領萌美
+// TODO: 雲の位置を左から右に動かす。見えなくなったら左端に戻す。(B) 実装：HW15A215 山領萌美
 // TODO: 砲台を青い壁に沿って上下に動かす。(C)
 // TODO: 弾のスピードを速くし、弾が画面右端を通り越したら再度発射可能にする。(D)
 // TODO: スコアのサイズを大きくする。(E) hw16a185 松本聖司
@@ -10,10 +11,12 @@
 // TODO: PlayBGM()関数を使って、BGMを再生する。(G) HW16A063 木下直矢
 // TODO: PlaySE()関数を使って、弾の発射時とターゲットに当たった時にSEを再生する。(H) HW16A063 木下直矢
 
+
 class class_score{
 public:
     int bg1,bg2,flag;
     float x,y,rad;
+
     class_score(){
         bg1=0;
         bg2=0;
@@ -41,11 +44,14 @@ class_score score;          //!< スコア
 // ゲーム開始時に呼ばれる関数です。
 void Start()
 {
-    cloudPos = Vector2(-320, 100);
-    cannonPos = Vector2(-80, -150);
-    targetRect = Rect(80, -140, 40, 40);
-    bulletPos.x = -999;
+    cloudPos = Vector2(-320 , 100);
+    //砲台およびターゲット位置 実装：HW15A215 山領萌美
+    cannonPos = Vector2(-320+10, -150);
+    targetRect = Rect(320-40, -140, 40, 40);
     
+    bulletPos.x = -999;
+    score.bg1 = 0;
+    score.bg2 = 0;
 // BGMの再生
     PlayBGM("bgm_maoudamashii_8bit07.mp3");
  }
@@ -78,8 +84,12 @@ void Update()
     Clear(Color::cyan);
     FillRect(Rect(-320, -240, 640, 100), Color::green);
 
-    // 雲の描画
+    // 雲の描画 実装：HW15A215 山領萌美
     DrawImage("cloud1.png", cloudPos);
+    cloudPos.x += 100 * Time::deltaTime;
+    if(cloudPos.x > 320 + 100){
+        cloudPos.x = -320 - 250;
+    }
 
     // 弾の描画
     if (bulletPos.x > -999) {
