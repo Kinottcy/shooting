@@ -5,17 +5,30 @@
 // TODO: 雲の位置を左から右に動かす。見えなくなったら左端に戻す。(B)
 // TODO: 砲台を青い壁に沿って上下に動かす。(C)
 // TODO: 弾のスピードを速くし、弾が画面右端を通り越したら再度発射可能にする。(D)
-// TODO: スコアのサイズを大きくする。(E)
-// TODO: スコアを100点ずつ加算するようにし、5桁の表示に変える。(F)
 // TODO: PlayBGM()関数を使って、BGMを再生する。(G)
 // TODO: PlaySE()関数を使って、弾の発射時とターゲットに当たった時にSEを再生する。(H)
 
+class class_score{
+public:
+    int bg1,bg2,flag;
+    float x,y,rad;
+    void program(){
+        if(bg1>bg2){
+            bg2+=3;
+            y+=0.5;
+            if(bg1<bg2)bg2=bg1;
+            SetFont("nicoca_v1.ttf", 20.0f);
+            DrawText(FormatString("%03d", 100), Vector2(270, y-1), Color::black);
+            DrawText(FormatString("%03d", 100), Vector2(270, y), Color::white);
+        }
+    }
+};
 
 Vector2 cloudPos;       //!< 雲の位置
 Vector2 cannonPos;      //!< 砲台の位置
 Vector2 bulletPos;      //!< 弾の位置
 Rect    targetRect;     //!< ターゲットの矩形
-int     score;          //!< スコア
+class_score score;          //!< スコア
 
 
 // ゲーム開始時に呼ばれる関数です。
@@ -25,7 +38,8 @@ void Start()
     cannonPos = Vector2(-80, -150);
     targetRect = Rect(80, -140, 40, 40);
     bulletPos.x = -999;
-    score = 0;
+    score.bg1 = 0;
+    score.bg2 = 0;
 }
 
 // 1/60秒ごとに呼ばれる関数です。モデルの更新と画面の描画を行います。
@@ -43,7 +57,8 @@ void Update()
         // ターゲットと弾の当たり判定
         Rect bulletRect(bulletPos, Vector2(32, 20));
         if (targetRect.Overlaps(bulletRect)) {
-            score += 1;         // スコアの加算
+            score.bg1 += 100;         // スコアの加算
+            score.y=-100;       //演出のリセット
             bulletPos.x = -999; // 弾を発射可能な状態に戻す
         }
     }
@@ -68,8 +83,9 @@ void Update()
     FillRect(targetRect, Color::red);
 
     // スコアの描画
-    SetFont("nicoca_v1.ttf", 20.0f);
-    DrawText(FormatString("%02d", score), Vector2(-319, 199), Color::black);
-    DrawText(FormatString("%02d", score), Vector2(-320, 200), Color::white);
+    score.program();
+    SetFont("nicoca_v1.ttf", 48.0f);
+    DrawText(FormatString("%05d", score.bg2), Vector2(-319, 199), Color::black);
+    DrawText(FormatString("%05d", score.bg2), Vector2(-320, 200), Color::white);
 }
 
