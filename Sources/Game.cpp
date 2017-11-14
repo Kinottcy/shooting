@@ -9,8 +9,7 @@
 // TODO: スコアを100点ずつ加算するようにし、5桁の表示に変える。(F)
 // TODO: PlayBGM()関数を使って、BGMを再生する。(G) HW16A063 木下直矢
 // TODO: PlaySE()関数を使って、弾の発射時とターゲットに当たった時にSEを再生する。(H) HW16A063 木下直矢
-// TODO: PlayBGM()関数を使って、BGMを再生する。(G)
-// TODO: PlaySE()関数を使って、弾の発射時とターゲットに当たった時にSEを再生する。(H)
+
 
 class class_score{
 public:
