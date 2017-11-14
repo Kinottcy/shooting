@@ -5,27 +5,31 @@
 // TODO: 雲の位置を左から右に動かす。見えなくなったら左端に戻す。(B)
 // TODO: 砲台を青い壁に沿って上下に動かす。(C)
 // TODO: 弾のスピードを速くし、弾が画面右端を通り越したら再度発射可能にする。(D)
-// TODO: スコアのサイズを大きくする。(E)
-// TODO: スコアを100点ずつ加算するようにし、5桁の表示に変える。(F)
+// TODO: スコアのサイズを大きくする。(E) hw16a185 松本聖司
+// TODO: スコアを100点ずつ加算するようにし、5桁の表示に変える。(F) hw16a185 松本聖司
 // TODO: PlayBGM()関数を使って、BGMを再生する。(G) HW16A063 木下直矢
 // TODO: PlaySE()関数を使って、弾の発射時とターゲットに当たった時にSEを再生する。(H) HW16A063 木下直矢
-
 
 class class_score{
 public:
     int bg1,bg2,flag;
     float x,y,rad;
-    void program(){
-        if(bg1>bg2){
-            bg2+=3;
-            y+=0.5;
-            if(bg1<bg2)bg2=bg1;
-            SetFont("nicoca_v1.ttf", 20.0f);
-            DrawText(FormatString("%03d", 100), Vector2(270, y-1), Color::black);
-            DrawText(FormatString("%03d", 100), Vector2(270, y), Color::white);
-        }
+    class_score(){
+        bg1=0;
+        bg2=0;
     }
+    void program();
 };
+void class_score::program(){
+    if(bg1>bg2){
+        bg2+=3;
+        y+=0.5;
+        if(bg1<bg2)bg2=bg1;
+        SetFont("nicoca_v1.ttf", 20.0f);
+        DrawText(FormatString("%03d", 100), Vector2(270, y-1), Color::black);
+        DrawText(FormatString("%03d", 100), Vector2(270, y), Color::white);
+    }
+}
 
 Vector2 cloudPos;       //!< 雲の位置
 Vector2 cannonPos;      //!< 砲台の位置
@@ -41,14 +45,10 @@ void Start()
     cannonPos = Vector2(-80, -150);
     targetRect = Rect(80, -140, 40, 40);
     bulletPos.x = -999;
-//    score = 0;
     
 // BGMの再生
     PlayBGM("bgm_maoudamashii_8bit07.mp3");
-    
-    score.bg1 = 0;
-    score.bg2 = 0;
-}
+ }
 
 // 1/60秒ごとに呼ばれる関数です。モデルの更新と画面の描画を行います。
 void Update()
